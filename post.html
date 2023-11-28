@@ -16,9 +16,9 @@
 But being a developer myself i would like to have more control over scene, so i decided to replicate it with the help of React Three Fiber and Three.js. Let's dive into this effect right away!</p>
 
 <h2>Basic scene</h2>
-<p>Thanks to amazing R3F community there is a MeshTransmissionMaterial in the Drei repository now. I also took a model to put behind that glass object. Keep in mind that for glass and such materials it is superimportant to add environment lighting(hdr,exr), so you will see all those nice reflections.</p>
+<p>Thanks to amazing R3F community there is a MeshTransmissionMaterial in the Drei repository now. I also took a model to put behind that glass object. Keep in mind that for glass and such materials it is superimportant to add environment lighting(usually hdr or exr file ), so you will see all those nice reflections.</p>
 
-<iframe src="https://codesandbox.io/embed/6ftp28?view=Editor+%2B+Preview&module=%2Fsrc%2FApp.js"
+<iframe src="https://codesandbox.io/embed/6ftp28?view=Editor+Preview&module=%2Fsrc%2FApp.js"
      style="width:100%; height: 500px; border:0; border-radius: 4px; overflow:hidden;"
      title="transmision material"
      allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
@@ -27,7 +27,7 @@ But being a developer myself i would like to have more control over scene, so i 
 
 <p>Now, there is our first issue with this. We shouldnt be seeing the object behind the glass. Only through the glass. <br>
 The way this material works, it renders sculpture twice: first as a texture for glass, second time as an actual object.<br>
-There is an easy way to fix this, just by hiding the object for the final render.</p>
+Luckily there is an easy way to fix this, just by hiding the object for the final render.</p>
 <pre>
 useFrame((state) => {
     sculpture.current.visible = true;
@@ -43,9 +43,9 @@ useFrame((state) => {
 </pre>
 <p>And now using Transmission material props we can set the “behind-the-glass scene” for it manually, like this:</p>
 <pre>
-<MeshTransmissionMaterial
-buffer={buffer.texture}
->
+  &#x3C;MeshTransmissionMaterial
+      buffer={buffer.texture}
+  &#x3E;
 </pre>
 <p>Not only we achieve the portal effect then, we also significantly optimise the whole scene rendering! Because we only render object once!</p>
 <p>This is what we have now:</p>
@@ -58,14 +58,14 @@ buffer={buffer.texture}
 
 <h2>Splats</h2>
 <p>3D portal is interesting, but let’s go further, and use Gaussian Splatting!</p>
-<p>If you are new to this, i really recommend watching <a href=“[3D Gaussian Splatting - Why Graphics Will Never Be The Same](https://www.youtube.com/watch?v=HVv_IQKlafQ)”>good explanation videos </a>. TLDW: it is a new way to render 3D-scenes. </p>
+<p>If you are new to this, i really recommend watching <a href=“https://www.youtube.com/watch?v=HVv_IQKlafQ”>good explanation videos</a>. TLDW: it is a new way to render 3D-scenes.</p>
 
-<p>And in our case it actually opens up a whole real world to be integrated into our 3D scenes. In the original Spline scene, the scan of a human was used. I thought this is a nice opportunity to showcase one of the symbols of my beloved Kyiv.</p>
-<p>The problem is, the monument is over 100 meters tall. And you cant fly civil drones in Ukraine. Literally the very moment im writing this, air defence is working hard in my city.</p>
+<p>And in our case it actually opens up a whole real world to be integrated into our 3D scenes. In the original Spline scene by Max, the scan of a human was used. I thought this is a nice opportunity to showcase one of the symbols of my beloved Kyiv, Ukraína-máty monument.</p>
+<p>The problem is, the sculpture is over 100 meters tall. And you can't fly civil drones in Ukraine, we have regular air attacks in here, even the very moment i'm writing these words.</p>
 
-<p>So, i went to youtube and found a <a href=“https://www.youtube.com/watch?v=W7G7HqWbgdo”>4 years old footage of the monument</a>. I uploaded the video to Luma app(you could also use Polycam). And here is the result:</p>
+<p>So, i went to youtube and found a <a href=“https://www.youtube.com/watch?v=W7G7HqWbgdo”>4 years old footage of the monument</a>. I uploaded the video directly to Luma app (but you could also use Polycam). And here is the result:</p>
 <iframe src="https://lumalabs.ai/embed/1835c7e7-6cd7-420d-aceb-74c68c3d1427?mode=sparkles&background=%23ffffff&color=%23000000&showTitle=true&loadBg=true&logoPosition=bottom-left&infoPosition=bottom-right&cinematicVideo=undefined&showMenu=false" width="889" height="500" frameborder="0" title="luma embed" style="border: none;"></iframe>
-<p>Woah! It amazes me that some old videos could help you to recreate objects pretty accurately. But the quest wasnt finished, there is a major part of city landscape in the scan too. And if i download the "splat" file, it is 260Mb, not really usable in the web environment.</p>
+<p>I'd be honest i didnt expect it to be that good! It amazes me that some old videos could help you to recreate objects pretty accurately. But the quest wasn't finished, there is a major part of city landscape in the scan too. And if i download this "splat" file, it is 260Mb, not really usable in the web environment.</p>
 
 <h2>Edit scene</h2>
 <p>Thats where the <a href='https://playcanvas.com/super-splat'>editor from Playcanvas developers</a> helps. You can just remove splats you dont need.</a>
@@ -75,27 +75,34 @@ buffer={buffer.texture}
 <p>Now i can finally export it to .splat format, which could be used with three.js!</p>
 
 <h2>Back to r3f</h2>
-<p>There has been a lot of work on porting this rendering technique to three.js recently. And just last week, <a href=“x.com/0xca0a”>Paul Henschel</a> himself ported this to React Three Fiber! If you dont know who Paul is, well, i recommend you to go right now and subscribe to him, you’d be right on the frontier of all things 3D on the web happening!</p>
-<p>So i took an opportunity and used his latest <a href=“https://codesandbox.io/p/sandbox/jolly-water-immus4”>codesandbox</a> to incorporate my edited .splat file into my scene. It couldnt look easier code wise:</p>
+<p>There has been a lot of work on porting this rendering technique to three.js recently. And just last week, <a href=“https://x.com/0xca0a”>Paul Henschel</a> himself ported this to React Three Fiber! If you dont know who Paul is, well, i recommend you to go right now and subscribe to him, you’d be right on the frontier of all things 3D on the web happening!</p>
+<p>So i took an opportunity and used his latest <a href=“https://codesandbox.io/p/sandbox/jolly-water-immus4”>codesandbox</a> example to integrated my edited .splat file into my scene. It couldn't look easier codewise:</p>
 <pre>
-<Splat
-	scale={2}
-	rotation={[0, 0, 0]}
-	position={[0, 0, 0]}
-	src="my.splat"
-/>
+  &#x3C;Splat
+    &#x9;scale={2}
+    &#x9;rotation={[0, 0, 0]}
+    &#x9;position={[0, 0, 0]}
+    &#x9;src=&#x22;my.splat&#x22;
+  /&#x3E;
 </pre>
+<p>Keep in mind, this code is an early version, so it might change in future. And it would probably end up as a module in amazing <a href="https://github.com/pmndrs/drei">Drei</a> collection.</p>
 <p>And here is how it looks like:</p>
-<iframe src="https://codesandbox.io/embed/g6r7w9?view=Editor+%2B+Preview&module=%2Fsrc%2FApp.js"
+<iframe src="https://codesandbox.io/embed/g6r7w9?view=Preview&module=%2Fsrc%2FApp.js"
      style="width:100%; height: 500px; border:0; border-radius: 4px; overflow:hidden;"
      title="transmission portal"
      allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
      sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
    ></iframe>
 <p>And we are done! I also added an additional Box with stripes, to add some depth. It has side="backside" enabled, so we only see the insides of it, that adds to illusion.</p>
+<p>Here is another object, a sculpture by Oleksii Zolotariov, i took a couple of photos at exhibition, and easily converted it to my scene:</p>
+<iframe src="https://codesandbox.io/embed/rktypl?view=preview&module=%2Fsrc%2FApp.js"
+     style="width:100%; height: 500px; border:0; border-radius: 4px; overflow:hidden;"
+     title="sculpture by Zolotariov"
+     allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+     sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+   ></iframe>
 <p>I’d be curious what you come up with, and how you can extend these demos, let me know on twitter!</p>
 <h2>Final words</h2>
-
 <p>It mesmerises me how many wonderful people are involved in such a fast paces spread of this new technology. I dont think i can even mention every single one of them, so i just recommend you to keep supporting all of the involved parties and open source in general. Because it is what makes this happen to us.</p>
 
 <p>It is also unbelievable, that i can basically record a random video on the phone, and have those real life objects in my three.js scene in an hour, looking good! Isn’t that crazy?</p>
