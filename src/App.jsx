@@ -29,7 +29,7 @@ function GlassModel() {
   const ref = useRef();
   const ref1 = useRef();
   const material = useRef();
-  const normalMap = useTexture("/glass1.jpg");
+  const normalMap = useTexture("glass1.jpg");
   normalMap.wrapS = normalMap.wrapT = 1000;
 
   useFrame((state) => {

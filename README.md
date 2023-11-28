@@ -1,8 +1,45 @@
-# React + Vite
+# 3D Glass Portal Card with React Three Fiber and Gaussian Splatting
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Demo of a 3D glass portal card effect using R3F and Gaussian Splatting. 
 
-Currently, two official plugins are available:
+![3D Portal Card](https://generative-placeholders.glitch.me/image?width=800&height=600")
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[Article on Codrops](https://tympanus.net/codrops/?p=74549)
+
+[Demo](http://tympanus.net/Development/3DPortalCard/)
+
+## Installation
+
+Install dependencies:
+
+```
+npm install
+```
+
+Compile the code for development and start a local server:
+
+```
+npm start
+```
+
+Create the build:
+
+```
+npm run build
+```
+
+## Misc
+
+Follow Yuri: [Twitter](https://twitter.com/akella), [YouTube](https://www.youtube.com/@akella_), [Patreon](https://www.patreon.com/allyourhtml) 
+
+Follow Codrops: [Twitter](http://www.twitter.com/codrops), [Facebook](http://www.facebook.com/codrops), [GitHub](https://github.com/codrops), [Instagram](https://www.instagram.com/codropsss/)
+
+## License
+[MIT](LICENSE)
+
+Made with :blue_heart:  by [Codrops](http://www.codrops.com)
+
+
+
+
+
