@@ -2,7 +2,7 @@
 
 Demo of a 3D glass portal card effect using R3F and Gaussian Splatting. 
 
-![3D Portal Card](https://generative-placeholders.glitch.me/image?width=800&height=600")
+![3D Portal Card](https://tympanus.net/codrops/wp-content/uploads/2023/11/glass3d.2023-11-28-14_27_25.gif)
 
 [Article on Codrops](https://tympanus.net/codrops/?p=74549)
 
